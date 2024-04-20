@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/SIGE-INICIO-C#-API.props" />
+</Project>

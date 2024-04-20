@@ -1,0 +1,6 @@
+@SIGE_INICIO_C__API_HostAddress = http://localhost:5124
+
+GET {{SIGE_INICIO_C__API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

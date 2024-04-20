@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/SIGE-INICIO-C#-API.props" />
+</Project>
