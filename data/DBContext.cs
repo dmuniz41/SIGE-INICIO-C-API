@@ -11,7 +11,6 @@ namespace SIGE_INICIO_C__API.data
     {
         public DbSet<User> Users { get; set; } = null!;
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=INICIODB;User Id=sa;Password=Dmt41971109;MultipleActiveResultSets=true;Encrypt=false");
