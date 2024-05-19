@@ -1,5 +1,6 @@
 using SIGE_INICIO_C__API.data;
 using Microsoft.EntityFrameworkCore;
+using SIGE_INICIO_C__API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
