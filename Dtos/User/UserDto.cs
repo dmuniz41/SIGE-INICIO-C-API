@@ -7,6 +7,7 @@ namespace SIGE_INICIO_C__API.Dtos.User
 {
     public class UserDto
     {
+        public int Id {get; set;}
         public string UserId { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string? LastName { get; set; }

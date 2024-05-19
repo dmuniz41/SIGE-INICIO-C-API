@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SIGE_INICIO_C__API.data;
+using SIGE_INICIO_C__API.Dtos.User;
 using SIGE_INICIO_C__API.Filters;
 using SIGE_INICIO_C__API.Mappers;
 using SIGE_INICIO_C__API.models;
@@ -20,13 +21,13 @@ namespace SIGE_INICIO_C__API.controllers
 
         [HttpPost]
         // [User_ValidateCreateUserFilter]
-        public IActionResult CreateUser([FromBody] User user)
+        public IActionResult CreateUser([FromBody] CreateUserRequestDto userDto)
         {
-
+            var user = userDto.ToUserFromCreateDTO();
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return Ok(user);
+            return CreatedAtAction(nameof(GetById), new {id = user.Id},user.ToUserDto());
         }
 
         [HttpGet]
@@ -39,7 +40,7 @@ namespace SIGE_INICIO_C__API.controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<User>> GetOneUser(int id)
+        public ActionResult<List<User>> GetById(int id)
         {
             var DBUser = _context.Users.Find(id);
             if (DBUser == null)
@@ -47,7 +48,7 @@ namespace SIGE_INICIO_C__API.controllers
                 return NotFound();
             }
 
-            return Ok(DBUser);
+            return Ok(DBUser.ToUserDto());
         }
     }
 }
