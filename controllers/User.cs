@@ -27,7 +27,25 @@ namespace SIGE_INICIO_C__API.controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetById), new {id = user.Id},user.ToUserDto());
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user.ToUserDto());
+        }
+        [HttpPut("{id}")]
+        public IActionResult UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateDto)
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.UserId = updateDto.UserId;
+            user.Name = updateDto.Name;
+            user.LastName = updateDto.LastName;
+            user.Privileges = updateDto.Privileges;
+            user.Password = updateDto.Password;
+            user.Areas = updateDto.Areas;
+
+            _context.SaveChanges();
+            return Ok(user.ToUserDto());
         }
 
         [HttpGet]

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SIGE-INICIO-C#-API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+09d61554a1357960080ff422d2601ae37f6a2de4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+feac818fad6772d91199b784a13c566436a9cc08")]
 [assembly: System.Reflection.AssemblyProductAttribute("SIGE-INICIO-C#-API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SIGE-INICIO-C#-API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
