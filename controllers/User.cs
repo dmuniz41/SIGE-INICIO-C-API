@@ -68,5 +68,18 @@ namespace SIGE_INICIO_C__API.controllers
 
             return Ok(DBUser.ToUserDto());
         }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteUser([FromRoute] int id)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return NoContent();
+        }
     }
 }
