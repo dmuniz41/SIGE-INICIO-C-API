@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SIGE_INICIO_C__API.data;
 using SIGE_INICIO_C__API.Dtos.User;
 using SIGE_INICIO_C__API.Filters;
@@ -21,18 +22,18 @@ namespace SIGE_INICIO_C__API.controllers
 
         [HttpPost]
         // [User_ValidateCreateUserFilter]
-        public IActionResult CreateUser([FromBody] CreateUserRequestDto userDto)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequestDto userDto)
         {
             var user = userDto.ToUserFromCreateDTO();
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user.ToUserDto());
         }
         [HttpPut("{id}")]
-        public IActionResult UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateDto)
+        public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequestDto updateDto)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -44,23 +45,24 @@ namespace SIGE_INICIO_C__API.controllers
             user.Password = updateDto.Password;
             user.Areas = updateDto.Areas;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return Ok(user.ToUserDto());
         }
 
         [HttpGet]
-        public ActionResult<List<User>> GetAllUsers()
+        public async Task<ActionResult<List<User>>> GetAllUsers()
         {
 
-            var users = _context.Users.ToList().Select(user => user.ToUserDto());
+            var users = await _context.Users.ToListAsync();
+            var usersDto = users.Select(user => user.ToUserDto());
 
             return Ok(users);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<List<User>> GetById(int id)
+        public async Task<ActionResult<User>> GetById(int id)
         {
-            var DBUser = _context.Users.Find(id);
+            var DBUser = await _context.Users.FindAsync(id);
             if (DBUser == null)
             {
                 return NotFound();
@@ -69,16 +71,16 @@ namespace SIGE_INICIO_C__API.controllers
             return Ok(DBUser.ToUserDto());
         }
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser([FromRoute] int id)
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
 
             _context.Users.Remove(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return NoContent();
         }
     }
