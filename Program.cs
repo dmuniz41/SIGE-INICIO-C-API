@@ -1,6 +1,8 @@
 using SIGE_INICIO_C__API.data;
 using Microsoft.EntityFrameworkCore;
 using SIGE_INICIO_C__API.Filters;
+using SIGE_INICIO_C__API.Interfaces;
+using SIGE_INICIO_C__API.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DBContext>();
 
 using DBContext context = new();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
