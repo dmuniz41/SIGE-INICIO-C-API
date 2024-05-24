@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using SIGE_INICIO_C__API.data;
 using SIGE_INICIO_C__API.Dtos.User;
+using SIGE_INICIO_C__API.Helpers;
 using SIGE_INICIO_C__API.Interfaces;
 using SIGE_INICIO_C__API.models;
 
@@ -34,9 +36,18 @@ namespace SIGE_INICIO_C__API.Repository
             return user;
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync(QueryObject query)
         {
-            return await _context.Users.ToListAsync();
+            var users = _context.Users.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(query.Name))
+            {
+                users = users.Where(x => x.Name.Contains(query.Name));
+            }
+            if (!string.IsNullOrWhiteSpace(query.LastName))
+            {
+                users = users.Where(x => x.LastName.Contains(query.LastName));
+            }
+            return await users.ToListAsync();
         }
 
         public async Task<User?> GetByIdAsync(int id)
